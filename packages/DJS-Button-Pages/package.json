@@ -1,11 +1,13 @@
 {
-    "name": "djs-button-pages",
+    "name": "@notoiro/djs-button-pages",
     "version": "4.0.2",
     "description": "A simple yet powerful module for implementing customizable embed pages with buttons in Discord chat. Works only with Discord.js.",
     "main": "dist/Paginations.js",
     "types": "dist/Paginations.d.ts",
     "private": false,
-
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com/"
+    },
     "files":
     [
         "dist/**/*",
