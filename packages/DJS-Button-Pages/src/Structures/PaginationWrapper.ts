@@ -1,13 +1,15 @@
 import { APIEmbed,
     InteractionReplyOptions,
     Embed,
-    EmbedBuilder, 
-    Message, 
-    MessageCreateOptions, 
-    MessageReplyOptions, 
-    RepliableInteraction, 
+    EmbedBuilder,
+    Message,
+    MessageCreateOptions,
+    MessageReplyOptions,
+    RepliableInteraction,
     Snowflake,
-    TextBasedChannel } from "discord.js";
+    TextBasedChannel,
+    MessageFlags
+} from "discord.js";
 import FilterOptions from "./FilterOptions";
 import PaginationData from "./PaginationData";
 import ButtonWrapper from "./ButtonWrapper";
@@ -132,7 +134,7 @@ export default class PaginationWrapper implements PaginationData
 
     /**
      * Sets action that will be called after the pagination is stopped.
-     * @param {StopAction} action Action. 
+     * @param {StopAction} action Action.
      * @returns {this}
      */
     public setAfterStopAction(action:StopAction): this
@@ -145,7 +147,7 @@ export default class PaginationWrapper implements PaginationData
     /**
      * Sets time that the pagination will be alive for.
      * @param {number} time Time.
-     * @param {boolean} bypassLimits Should the time bypass limits or not. 
+     * @param {boolean} bypassLimits Should the time bypass limits or not.
      * @returns {this}
      */
     public setTime(time:number, bypassLimits = false): this
@@ -333,10 +335,11 @@ export default class PaginationWrapper implements PaginationData
      */
     public async interactionReply(interaction:RepliableInteraction, options:InteractionReplyOptions = {}, page = 0): Promise<PaginationSent>
     {
-        if (!interaction.deferred)  
-            await interaction.deferReply({ephemeral: options.ephemeral
-                ? true
-                : false});
+        if (!interaction.deferred)
+            if(options.ephemeral)
+                await interaction.deferReply({flags: MessageFlags.Ephemeral});
+            else
+                await interaction.deferReply();
 
         if (page < 0 || !Number.isInteger(page))
             throw new RangeError("[DJS-Button-Pages]: Page number should be integer!");
