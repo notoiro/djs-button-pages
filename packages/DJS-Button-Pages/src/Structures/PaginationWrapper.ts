@@ -285,6 +285,7 @@ export default class PaginationWrapper implements PaginationData
         options.embeds = [this.embeds[page]];
         options.components = [];
 
+        // @ts-ignore
         const message = await channel.send(options);
 
         if (this._afterSendingAction)
@@ -336,7 +337,7 @@ export default class PaginationWrapper implements PaginationData
     public async interactionReply(interaction:RepliableInteraction, options:InteractionReplyOptions = {}, page = 0): Promise<PaginationSent>
     {
         if (!interaction.deferred)
-            if(options.ephemeral)
+            if(options.flags === MessageFlags.Ephemeral)
                 await interaction.deferReply({flags: MessageFlags.Ephemeral});
             else
                 await interaction.deferReply();
@@ -353,6 +354,7 @@ export default class PaginationWrapper implements PaginationData
         options.embeds = [this.embeds[page]];
         options.components = [];
 
+        // @ts-ignore
         const reply = await interaction.editReply(options);
 
         if (this._afterSendingAction)
