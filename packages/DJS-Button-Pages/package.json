@@ -5,9 +5,6 @@
     "main": "dist/Paginations.js",
     "types": "dist/Paginations.d.ts",
     "private": false,
-    "publishConfig": {
-        "registry": "https://npm.pkg.github.com/"
-    },
     "files":
     [
         "dist/**/*",
